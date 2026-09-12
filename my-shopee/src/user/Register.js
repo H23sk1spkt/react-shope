@@ -10,6 +10,7 @@ function Register() {
     email: "",
     password: "",
     password_confirmation: "",
+    address: "",
     phone: "",
     id_country: "",
     avatar: null,
@@ -105,6 +106,13 @@ function Register() {
               type="password"
               name="password_confirmation"
               placeholder="Password"
+              onChange={handleInput}
+            />
+            <label>Address</label>
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
               onChange={handleInput}
             />
             <label>Phone</label>

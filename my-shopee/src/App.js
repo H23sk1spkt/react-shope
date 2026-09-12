@@ -7,6 +7,8 @@ import Blog from "./pages/blog/Blog";
 import BlogDetails from "./pages/blog/BlogDetails";
 import Register from "./user/Register";
 import Login from "./user/Login";
+import AccountLayout from "./layouts/AccountLayout";
+import AccountUpdate from "./pages/account/AccountUpdate";
 function App() {
   return (
     <>
@@ -20,6 +22,10 @@ function App() {
         <Route element={<SingleLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+        </Route>
+        {/* AccountLayout */}
+        <Route element={<AccountLayout />}>
+          <Route path="/account" element={<AccountUpdate />} />
         </Route>
       </Routes>
     </>
