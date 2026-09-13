@@ -23,7 +23,7 @@ function Register() {
         setCountry(res.data.countries);
       })
       .catch((error) => console.log(error));
-  });
+  },[]);
   function handleInput(e) {
     const name = e.target.name;
     const value = e.target.type === "file" ? e.target.files[0] : e.target.value;
@@ -31,7 +31,7 @@ function Register() {
   }
   function handleRegister(e) {
     e.preventDefault();
-    console.log(input);
+
     const formData = new FormData(e.target);
     let errorSubmit = {};
     let err = false;
@@ -52,16 +52,13 @@ function Register() {
       errorSubmit.password = "Mật khẩu xác nhận không khớp";
       err = true;
     }
-    if (!input.avatar) {
-      errorSubmit.avatar = "Vui lòng chọn ảnh làm ảnh đại diện";
-      err = true;
-    } else {
+    if (input.avatar) {
       const duoiImg = input.avatar.name.split(".").pop();
       if (input.avatar.size > 1024 * 1024 || !img.includes(duoiImg)) {
         errorSubmit.avatar = "Ảnh upload ko hợp lệ";
         err = true;
       }
-    }
+    } 
     setError(errorSubmit);
     if (!err) {
       axios

@@ -9,6 +9,7 @@ import Register from "./user/Register";
 import Login from "./user/Login";
 import AccountLayout from "./layouts/AccountLayout";
 import AccountUpdate from "./pages/account/AccountUpdate";
+import MyProduct from "./pages/product/MyProduct";
 function App() {
   return (
     <>
@@ -26,6 +27,8 @@ function App() {
         {/* AccountLayout */}
         <Route element={<AccountLayout />}>
           <Route path="/account" element={<AccountUpdate />} />
+          <Route path="/my-product" element={<MyProduct/>}/>
+
         </Route>
       </Routes>
     </>

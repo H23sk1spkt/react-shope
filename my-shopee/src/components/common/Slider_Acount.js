@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 function Slider_Account(){
     return (
         <>
@@ -12,7 +13,7 @@ function Slider_Account(){
             </div>
             <div className="panel panel-default">
               <div className="panel-heading">
-                <h4 className="panel-title"><a href="#">My product</a></h4>
+                <h4 className="panel-title"><Link to="/my-product">My product</Link></h4>
               </div>
             </div>
           </div>{/*/category-products*/}
