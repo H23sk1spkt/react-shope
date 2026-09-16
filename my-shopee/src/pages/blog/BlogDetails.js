@@ -34,29 +34,8 @@ function BlogDetails() {
       })
       .catch((error) => console.log(error));
   }, [id]);
-  function handlePostCmt() {
-    const isReply = replyId !== null;
-    const data = {
-      id_blog: id,
-      cmt: isReply ? replyContent : content,
-      level: isReply ? replyId : 0,
-    };
-    axios
-      .post("http://127.0.0.1:8000/api/blog/member/detail/cmt", data, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-      .then((res) => {
-        setComment(res.data.comments);
-        if (isReply) {
-          setReplyContent("");
-          setReplyId(null);
-        } else {
-          setContent("");
-        }
-      })
-      .catch((error) => alert(error.data.message));
+  function getCmt(data) {
+    setComment(data);
   }
   return (
     <>
@@ -167,7 +146,7 @@ function BlogDetails() {
             id={id}
             user={user}
             comments={comments}
-            setComment={setComment}
+            getCmt={getCmt}
             replyId={replyId}
             setReplyId={setReplyId}
             replyContent={replyContent}
@@ -179,9 +158,9 @@ function BlogDetails() {
           <Cmt
             content={content}
             setContent={setContent}
-            setComment={setComment}
             id={id}
             user={user}
+            getCmt={getCmt}
           />
         ) : (
           ""

@@ -63,7 +63,7 @@ function AccountUpdate() {
       }
     }
     if (!err) {
-      if ((!inputs.avatar) instanceof File) {
+      if ((!inputs.avatar instanceof File)) {
         formData.delete("avatar");
       }
       formData.append("_method", "PUT");
@@ -83,10 +83,10 @@ function AccountUpdate() {
   }
   return (
     <>
-      <div class="col-sm-9">
-        <div class="blog-post-area">
-          <h2 class="title text-center">Update user</h2>
-          <div class="signup-form">
+      <div className="col-sm-9">
+        <div className="blog-post-area">
+          <h2 className="title text-center">Update user</h2>
+          <div className="signup-form">
             <h2>update User!</h2>
             <form onSubmit={handleSubmit}>
               <input

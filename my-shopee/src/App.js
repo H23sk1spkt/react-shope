@@ -10,6 +10,8 @@ import Login from "./user/Login";
 import AccountLayout from "./layouts/AccountLayout";
 import AccountUpdate from "./pages/account/AccountUpdate";
 import MyProduct from "./pages/product/MyProduct";
+import AddProduct from "./pages/product/AddProduct";
+import EditProduct from "./pages/product/EditProduct";
 function App() {
   return (
     <>
@@ -28,6 +30,8 @@ function App() {
         <Route element={<AccountLayout />}>
           <Route path="/account" element={<AccountUpdate />} />
           <Route path="/my-product" element={<MyProduct/>}/>
+          <Route path="/add-product" element={<AddProduct/>}/>
+          <Route path="/edit-product/:id" element={<EditProduct/>}/>
 
         </Route>
       </Routes>

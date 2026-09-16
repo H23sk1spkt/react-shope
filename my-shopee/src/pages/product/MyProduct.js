@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-
+import { Link } from "react-router-dom";
 function MyProduct(){
     const userLocal=JSON.parse(localStorage.getItem('user'));
     const [product,setProduct]=useState([]);
@@ -46,7 +46,7 @@ function MyProduct(){
                   <p>{product[key].price}</p>
                 </td>
                 <td className="cart_total">
-                  <a>edit</a>
+                  <Link to={`/edit-product/${product[key].id}`} >edit</Link>
                   <a>delete</a>
                 </td>
               </tr>

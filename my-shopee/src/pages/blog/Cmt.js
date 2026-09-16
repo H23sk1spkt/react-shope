@@ -2,22 +2,19 @@ import axios from "axios";
 function Cmt({
   id,
   user,
-  setComment,
-  replyContent,
-  replyId,
-  setReplyContent,
-  setReplyId,
   content,
   setContent,
-  showReplyAfterParent,
-  isLastChild,
+  getCmt
 }) {
   function handlePostCmt() {
-    const isReply = replyId != null;
+    if(!content.trim()){
+      alert("Vui lòng nhập nội dung bình luận");
+      return 
+    }
     const data = {
       id_blog: id,
-      cmt: isReply ? replyContent : content,
-      level: isReply ? replyId : 0,
+      cmt: content,
+      level: 0,
     };
     axios
       .post("http://127.0.0.1:8000/api/blog/member/detail/cmt", data, {
@@ -26,54 +23,16 @@ function Cmt({
         },
       })
       .then((res) => {
-        setComment(res.data.comments);
-        if (isReply) {
-          setReplyContent("");
-          setReplyId(null);
-        } else {
-          setContent("");
-        }
+         console.log("POST RESPONSE:", res.data);
+          console.log("COMMENTS:", res.data.comments);
+          console.log("TYPE:", typeof res.data.comments);
+        getCmt(res.data.comments)
+        setContent("");
       })
       .catch((error) => alert(error.message));
   }
   return (
     <>
-      {isLastChild || showReplyAfterParent ? (
-        <li
-          style={{
-            marginLeft: "50px",
-            marginBottom: "20px",
-            clear: "both",
-          }}
-        >
-          <textarea
-            className="form-control"
-            rows="5"
-            placeholder="Nội dung reply"
-            value={replyContent}
-            onChange={(e) => setReplyContent(e.target.value)}
-          />
-          <button
-            type="button"
-            className="btn btn-primary"
-            style={{ marginTop: "10px" }}
-            onClick={handlePostCmt}
-          >
-            Post reply
-          </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            style={{ marginTop: "10px", marginLeft: "10px" }}
-            onClick={() => {
-              setReplyId(null);
-              setReplyContent("");
-            }}
-          >
-            Cancel
-          </button>
-        </li>
-      ) : (
         <div className="replay-box">
           <div className="row">
             <div className="col-sm-12">
@@ -97,7 +56,6 @@ function Cmt({
             </div>
           </div>
         </div>
-      )}
     </>
   );
 }
