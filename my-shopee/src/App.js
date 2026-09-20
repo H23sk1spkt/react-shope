@@ -12,19 +12,28 @@ import AccountUpdate from "./pages/account/AccountUpdate";
 import MyProduct from "./pages/product/MyProduct";
 import AddProduct from "./pages/product/AddProduct";
 import EditProduct from "./pages/product/EditProduct";
+import Index from "./index/Index";
+import ProductDetail from "./pages/product/ProductDetail";
+import { CartProvider } from "./context/CartContext";
+import Cart from "./pages/cart/Cart";
 function App() {
   return (
     <>
+    <CartProvider>
       <Routes>
         {/* MainLayout */}
         <Route element={<MainLayout />}>
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogDetails />} />
+          <Route path="/index" element={<Index />} />
+           <Route path="/product/detail/:id" element={<ProductDetail />} />
         </Route>
         {/* SingleLayout */}
         <Route element={<SingleLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/cart" element={<Cart />} />
+         
         </Route>
         {/* AccountLayout */}
         <Route element={<AccountLayout />}>
@@ -35,6 +44,7 @@ function App() {
 
         </Route>
       </Routes>
+    </CartProvider>
     </>
   );
 }

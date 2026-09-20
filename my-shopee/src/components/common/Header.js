@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 function Header(){
     const user=JSON.parse(localStorage.getItem('user'));
     const navigate=useNavigate();
+    const {totalQty}=useCart();
     function handleLogout(e){
         e.preventDefault();
         axios.post("http://127.0.0.1:8000/api/logout",{},{
@@ -82,7 +84,7 @@ function Header(){
                         <li><a href><i className="fa fa-user" /> Account</a></li>
                         <li><a href><i className="fa fa-star" /> Wishlist</a></li>
                         <li><a href="checkout.html"><i className="fa fa-crosshairs" /> Checkout</a></li>
-                        <li><a href="cart.html"><i className="fa fa-shopping-cart" /> Cart</a></li>
+                        <li><a href="cart.html"><i className="fa fa-shopping-cart" />{totalQty}</a></li>
                         {user ? <li><a onClick={handleLogout}><i className="fa fa-lock" /> Logout</a></li> :<li><Link to="/login"><i className="fa fa-lock" /> Login</Link></li>}
                     </ul>
                     </div>
