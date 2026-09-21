@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useCart } from "../../context/CartContext";
 
 function Cart() {
   const [cart, setCart] = useState({});
   let total = 0;
+  const { setTotalQty } = useCart();
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/index", {
@@ -15,6 +17,36 @@ function Cart() {
       })
       .catch((error) => console.log(error));
   }, []);
+  function handleCal(e, id, cal, isDelete = false) {
+    e.preventDefault();
+    const qty = Number(cart[id].qty) + Number(cal);
+    if (qty === 0) {
+      alert("Vui lòng ko để sản phẩm về 0");
+      return;
+    }
+    axios
+      .post(
+        "http://localhost:8000/api/cart",
+        {
+          id: id,
+          qty: qty,
+          isDelete: isDelete,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .then((res) => {
+        console.log(res.data);
+
+        setCart(res.data.cart);
+        setTotalQty(res.data.totalQty);
+      })
+      .catch((error) => {
+        console.log("STATUS:", error.response?.status);
+        console.log("DATA:", error.response?.data);
+      });
+  }
   return (
     <>
       <div>
@@ -70,7 +102,10 @@ function Cart() {
                           </td>
                           <td className="cart_quantity">
                             <div className="cart_quantity_button">
-                              <a className="cart_quantity_up" href>
+                              <a
+                                className="cart_quantity_up"
+                                onClick={(e) => handleCal(e, value.id, 1)}
+                              >
                                 {" "}
                                 +{" "}
                               </a>
@@ -78,11 +113,14 @@ function Cart() {
                                 className="cart_quantity_input"
                                 type="text"
                                 name="quantity"
-                                defaultValue={value.qty}
+                                value={value.qty}
                                 autoComplete="off"
                                 size={2}
                               />
-                              <a className="cart_quantity_down" href>
+                              <a
+                                className="cart_quantity_down"
+                                onClick={(e) => handleCal(e, value.id, -1)}
+                              >
                                 {" "}
                                 -{" "}
                               </a>
@@ -94,7 +132,10 @@ function Cart() {
                             </p>
                           </td>
                           <td className="cart_delete">
-                            <a className="cart_quantity_delete" href>
+                            <a
+                              className="cart_quantity_delete"
+                              onClick={(e) => handleCal(e, value.id, 0, true)}
+                            >
                               <i className="fa fa-times" />
                             </a>
                           </td>
@@ -181,16 +222,13 @@ function Cart() {
                 <div className="total_area">
                   <ul>
                     <li>
-                      Cart Sub Total <span>$59</span>
-                    </li>
-                    <li>
-                      Eco Tax <span>$2</span>
+                      Cart Sub Total <span>${total}</span>
                     </li>
                     <li>
                       Shipping Cost <span>Free</span>
                     </li>
                     <li>
-                      Total <span>$61</span>
+                      Total <span>${total}</span>
                     </li>
                   </ul>
                   <a className="btn btn-default update" href>
