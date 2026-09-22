@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useCart } from "../../context/CartContext";
-
+import { Link } from "react-router-dom";
 function Cart() {
   const [cart, setCart] = useState({});
   let total = 0;
@@ -234,9 +234,9 @@ function Cart() {
                   <a className="btn btn-default update" href>
                     Update
                   </a>
-                  <a className="btn btn-default check_out" href>
+                  <Link className="btn btn-default check_out"  to="/checkout">
                     Check Out
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

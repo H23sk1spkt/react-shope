@@ -16,6 +16,7 @@ import Index from "./index/Index";
 import ProductDetail from "./pages/product/ProductDetail";
 import { CartProvider } from "./context/CartContext";
 import Cart from "./pages/cart/Cart";
+import Checkout from "./pages/checkout/Checkout";
 function App() {
   return (
     <>
@@ -33,6 +34,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
          
         </Route>
         {/* AccountLayout */}
