@@ -167,7 +167,7 @@ function Header() {
                         {totalQty}
                       </Link>
                     </li>
-                    {user ? (
+                    {user && Object.keys(user).length>0 ? (
                       <li>
                         <a onClick={handleLogout}>
                           <i className="fa fa-lock" /> Logout

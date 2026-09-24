@@ -20,6 +20,8 @@ import Checkout from "./pages/checkout/Checkout";
 import SearchName from "./pages/search/SearchName";
 import SearchAdvance from "./pages/search/SearchAdvance";
 import SearchPrice from "./pages/search/SearchPrice";
+import CheckEmail from "./pages/forget/CheckEmail";
+import ChangePassword from "./pages/forget/ChangePassword";
 function App() {
   return (
     <>
@@ -41,6 +43,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkEmail" element={<CheckEmail />} />
+            <Route path="/changePassword" element={<ChangePassword />} />
           </Route>
           {/* AccountLayout */}
           <Route element={<AccountLayout />}>
