@@ -1,4 +1,16 @@
+import { use, useState } from "react"
+import Slider from "@mui/material/Slider"
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 function MenuLeft(){
+    const {min,max}=useParams();
+    const [price,setPrice]=useState([Number(min??0),Number(max ?? 20)]);
+    const navigate=useNavigate();
+    function handlePriceChange(e,newValue){
+        e.preventDefault();
+        setPrice(newValue)
+        navigate(`/searchPrice/${newValue[0]}/${newValue[1]}`)
+    }
     return (
         <>
         <div className="col-sm-3">
@@ -126,8 +138,9 @@ function MenuLeft(){
                 <div className="price-range">{/*price-range*/}
                 <h2>Price Range</h2>
                 <div className="well text-center">
-                    <input type="text" className="span2" defaultValue data-slider-min={0} data-slider-max={600} data-slider-step={5} data-slider-value="[250,450]" id="sl2" /><br />
-                    <b className="pull-left">$ 0</b> <b className="pull-right">$ 600</b>
+                   <Slider value={price} onChange={handlePriceChange} valueLabelDisplay="auto" min={0} max={100} step={5} />
+                   <b className="pull-left">${price[0]}</b>
+                   <b className="pull-right">${price[1]}</b>
                 </div>
                 </div>{/*/price-range*/}
                 <div className="shipping text-center">{/*shipping*/}
