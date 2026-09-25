@@ -33,7 +33,7 @@ function AddProduct() {
         setStatus(res.data.status);
       })
       .catch((error) => console.log(error));
-  });
+  },[]);
   function handleInput(e) {
     e.preventDefault();
     const name = e.target.name;
