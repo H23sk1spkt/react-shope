@@ -5,7 +5,7 @@ import { useCart } from "../context/CartContext";
 import ProductCart from "../productCart/ProductCart";
 function Index() {
   const [products, setProduct] = useState([]);
-  const { setTotalQty } = useCart();
+  const {setTotalQty } = useCart();
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/index")
@@ -17,24 +17,14 @@ function Index() {
   }, []);
   function addCart(id, e) {
     e.preventDefault();
-
-    axios
-      .post(
-        "http://localhost:8000/api/index",
-        { id: id },
-        {
-          withCredentials: true,
-        },
-      )
-      .then((res) => {
-        console.log("RESPONSE:", res.data);
-        setTotalQty(res.data.totalQty);
-      })
-      .catch((error) => {
-        console.log("STATUS:", error.response?.status);
-        console.log("DATA:", error.response?.data);
-        console.log("ERROR:", error);
-      });
+    let product = JSON.parse(localStorage.getItem("product")) || {};
+    if (product[id]) {
+      product[id]++;
+    } else {
+      product[id] = 1;
+    }
+    setTotalQty(prev=> prev+1);
+    localStorage.setItem("product", JSON.stringify(product));
   }
   return (
     <>
@@ -42,7 +32,7 @@ function Index() {
         <div className="features_items">
           {/*features_items*/}
           <h2 className="title text-center">Features Items</h2>
-          <ProductCart products={products} addCart={addCart}/>
+          <ProductCart products={products} addCart={addCart} />
         </div>
         {/*features_items*/}
         <div className="category-tab">

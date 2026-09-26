@@ -6,46 +6,44 @@ function Cart() {
   const [cart, setCart] = useState({});
   let total = 0;
   const { setTotalQty } = useCart();
+  let product=JSON.parse(localStorage.getItem('product'));
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/index", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res.data.cart);
-        setCart(res.data.cart);
-      })
-      .catch((error) => console.log(error));
+    axios.post("http://localhost:8000/api/addCart",{
+          product:product
+        })
+        .then((res)=> {
+            console.log(res.data);
+            setCart(res.data.cart);
+        })
+        .catch((error)=> console.log("DATA",error.response?.data));
   }, []);
   function handleCal(e, id, cal, isDelete = false) {
     e.preventDefault();
-    const qty = Number(cart[id].qty) + Number(cal);
+    if(isDelete){
+      // vì cart được tạo từ useState
+      // nên khi xoá thì phải tạo clone rồi mới xoá
+      setTotalQty(prev => prev - Number(product[id]));
+      const newCart={...cart};
+      delete newCart[id];
+      setCart(newCart)
+      delete product[id];
+      localStorage.setItem('product',JSON.stringify(product));
+      return
+    }
+    const qty = Number(product[id]) + Number(cal);
     if (qty === 0) {
       alert("Vui lòng ko để sản phẩm về 0");
       return;
     }
-    axios
-      .post(
-        "http://localhost:8000/api/cart",
-        {
-          id: id,
-          qty: qty,
-          isDelete: isDelete,
-        },
-        {
-          withCredentials: true,
-        },
-      )
-      .then((res) => {
-        console.log(res.data);
+    setTotalQty(prev => prev+Number(cal));
+    const newCart= {...cart,[id]:{
+      ...cart[id],
+      qty:qty
+    }}
+    setCart(newCart);
+    product[id]=qty;
+    localStorage.setItem('product',JSON.stringify(product));
 
-        setCart(res.data.cart);
-        setTotalQty(res.data.totalQty);
-      })
-      .catch((error) => {
-        console.log("STATUS:", error.response?.status);
-        console.log("DATA:", error.response?.data);
-      });
   }
   return (
     <>

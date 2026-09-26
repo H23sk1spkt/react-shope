@@ -7,6 +7,7 @@ function Checkout() {
   const userLocal = JSON.parse(localStorage.getItem("user"));
   const [errors, setError] = useState({});
   let total = 0;
+  const product=JSON.parse(localStorage.getItem('product'))
   const [input, setInput] = useState({
     name: "",
     email: "",
@@ -23,8 +24,8 @@ function Checkout() {
       try {
         const [registerRes, cartRes] = await Promise.all([
           axios.get("http://127.0.0.1:8000/api/register"),
-          axios.get("http://localhost:8000/api/index", {
-            withCredentials: true,
+          axios.post("http://localhost:8000/api/addCart",{
+            product:product
           }),
         ]);
         setCountry(registerRes.data.countries);
